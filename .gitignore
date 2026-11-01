@@ -1,0 +1,18 @@
+.venv/
+__pycache__/
+.pytest_cache/
+.ipynb_checkpoints/
+.DS_Store
+
+# Corpus, derivados y pesos: revisar derechos antes de redistribuir.
+data/raw/
+data/processed/
+models/
+checkpoints/
+*.pt
+*.pth
+*.bin
+*.safetensors
+
+# Archivos temporales, no tablas o figuras definitivas.
+results/tmp/

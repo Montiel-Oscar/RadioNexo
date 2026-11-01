@@ -1,0 +1,172 @@
+{
+  "total_frames": 281,
+  "overall": {
+    "overall_micro": {
+      "tp": 521,
+      "fp": 68,
+      "fn": 70,
+      "precision": 0.8845500848896435,
+      "recall": 0.8815566835871405,
+      "f1": 0.8830508474576272
+    },
+    "by_role": {
+      "Trajector": {
+        "tp": 270,
+        "fp": 32,
+        "fn": 36,
+        "precision": 0.8940397350993378,
+        "recall": 0.8823529411764706,
+        "f1": 0.8881578947368421
+      },
+      "Landmark": {
+        "tp": 251,
+        "fp": 36,
+        "fn": 34,
+        "precision": 0.8745644599303136,
+        "recall": 0.8807017543859649,
+        "f1": 0.8776223776223776
+      }
+    },
+    "gold_frames": 281,
+    "predicted_frames": 281
+  },
+  "frequent_indicators": {
+    "of": {
+      "frames": 130,
+      "tp": 240,
+      "fp": 23,
+      "fn": 22,
+      "precision": 0.9125475285171103,
+      "recall": 0.916030534351145,
+      "f1": 0.9142857142857143
+    },
+    "in": {
+      "frames": 71,
+      "tp": 128,
+      "fp": 19,
+      "fn": 20,
+      "precision": 0.8707482993197279,
+      "recall": 0.8648648648648649,
+      "f1": 0.8677966101694915
+    },
+    "without": {
+      "frames": 25,
+      "tp": 62,
+      "fp": 6,
+      "fn": 4,
+      "precision": 0.9117647058823529,
+      "recall": 0.9393939393939394,
+      "f1": 0.9253731343283583
+    },
+    "with": {
+      "frames": 11,
+      "tp": 13,
+      "fp": 9,
+      "fn": 9,
+      "precision": 0.5909090909090909,
+      "recall": 0.5909090909090909,
+      "f1": 0.5909090909090909
+    },
+    "within": {
+      "frames": 10,
+      "tp": 19,
+      "fp": 1,
+      "fn": 2,
+      "precision": 0.95,
+      "recall": 0.9047619047619048,
+      "f1": 0.9268292682926829
+    },
+    "over": {
+      "frames": 7,
+      "tp": 14,
+      "fp": 0,
+      "fn": 1,
+      "precision": 1.0,
+      "recall": 0.9333333333333333,
+      "f1": 0.9655172413793104
+    },
+    "under": {
+      "frames": 6,
+      "tp": 12,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "at": {
+      "frames": 6,
+      "tp": 10,
+      "fp": 3,
+      "fn": 3,
+      "precision": 0.7692307692307693,
+      "recall": 0.7692307692307693,
+      "f1": 0.7692307692307693
+    },
+    "throughout": {
+      "frames": 4,
+      "tp": 6,
+      "fp": 2,
+      "fn": 2,
+      "precision": 0.75,
+      "recall": 0.75,
+      "f1": 0.75
+    },
+    "on": {
+      "frames": 3,
+      "tp": 3,
+      "fp": 1,
+      "fn": 3,
+      "precision": 0.75,
+      "recall": 0.5,
+      "f1": 0.6
+    }
+  },
+  "structures": {
+    "un_trayector_un_lugar": {
+      "frames": 233,
+      "tp": 436,
+      "fp": 26,
+      "fn": 30,
+      "precision": 0.9437229437229437,
+      "recall": 0.9356223175965666,
+      "f1": 0.939655172413793
+    },
+    "sin_roles_principales": {
+      "frames": 10,
+      "tp": 0,
+      "fp": 16,
+      "fn": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "multiplicidad": {
+      "frames": 35,
+      "tp": 84,
+      "fp": 18,
+      "fn": 35,
+      "precision": 0.8235294117647058,
+      "recall": 0.7058823529411765,
+      "f1": 0.7601809954751132
+    },
+    "discontinuo": {
+      "frames": 17,
+      "tp": 23,
+      "fp": 24,
+      "fn": 29,
+      "precision": 0.48936170212765956,
+      "recall": 0.4423076923076923,
+      "f1": 0.46464646464646464
+    }
+  },
+  "false_negative_types": {
+    "Landmark_prediccion_sin_rol_gold": 9,
+    "Trajector_sin_solapamiento": 24,
+    "Trajector_prediccion_sin_rol_gold": 8,
+    "Landmark_solapamiento_sin_coincidencia_exacta": 19,
+    "Trajector_solapamiento_sin_coincidencia_exacta": 12,
+    "Landmark_sin_solapamiento": 15
+  },
+  "note": "Subgrupos superpuestos; métricas condicionadas al indicador anotado."
+}
