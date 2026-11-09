@@ -8,6 +8,8 @@ Dado un **indicador espacial ya marcado** en el texto de un informe de radiograf
 
 El trabajo compara tres métodos bajo el mismo protocolo: **reglas léxicas y de proximidad**, dos modelos secuenciales **CRF** (uno por rol) y un **híbrido fijo** que recurre a reglas sólo si el CRF no produjo ese rol. No usamos un LLM ni un encoder biomédico en el experimento reportado.
 
+Puedes explorar las cifras en el [panel visual local](dashboard/index.html) y consultar el [método de los desgloses](docs/visualizaciones.md). El panel contiene sólo estadísticas agregadas, no informes clínicos.
+
 ## Resultado principal
 
 | Método | Precisión | Exhaustividad | F1 micro exacta |
@@ -63,6 +65,13 @@ python src/demo.py
 
 Para reproducir **las cifras finales** con los métodos ya fijados, sigue los comandos de [experiments/final_protocol_v1.md](experiments/final_protocol_v1.md). Ese documento conserva las sumas SHA-256 de los scripts y pesos de la evaluación original; un entrenamiento nuevo puede producir pesos distintos según el entorno, por lo que **no garantizamos igualdad bit a bit**. Verifica las métricas con `src/evaluate.py` y contrástalas con [results/final_test.md](results/final_test.md). No edites modelos basándote en `test` y presentes luego esa misma prueba como independiente.
 
+Para regenerar las estadísticas visuales y el panel autónomo después de reproducir las predicciones de prueba:
+
+```bash
+python src/visual_stats.py
+python src/build_dashboard.py
+```
+
 ## Datos, método y límites
 
 El corpus [Rad-SpRL](https://doi.org/10.17632/yhb26hfz8n.1), descrito por [Datta y Roberts (2020)](https://doi.org/10.1016/j.dib.2020.106056), contiene 2 000 informes de radiografía de tórax en inglés. Esta copia local procede del [repositorio de los autores](https://github.com/krobertslab/datasets/tree/master/rad-sprl). Nuestra [auditoría](docs/auditoria_rad_sprl.md) encontró diferencias entre los conteos publicados y el XML utilizado; el SHA-256 y la partición en `data/splits/` definen exactamente el material experimental. El corpus y sus derivados no se redistribuyen aquí.
@@ -80,7 +89,7 @@ src/           Lector, preparación, reglas, CRF, híbrido, evaluación y demo
 tests/         Pruebas automatizadas
 ```
 
-`data/raw/`, `data/processed/`, `models/`, `results/tmp/` y `.venv/` se mantienen locales mediante `.gitignore`. **No subas informes clínicos ni predicciones individuales al repositorio.** El informe LaTeX de clase vive fuera de este repositorio porque su portada todavía contiene datos personales y metadatos de otra materia.
+`data/raw/`, `data/processed/`, `models/`, `results/tmp/` y `.venv/` se mantienen locales mediante `.gitignore`. **No subas informes clínicos ni predicciones individuales al repositorio.** La fuente LaTeX de clase se mantiene fuera del repositorio; su [PDF compilado](Reportefinal/main.pdf) sí está aquí y contiene datos personales en la portada. Revísalo antes de cambiar la visibilidad privada del repositorio.
 
 ## Estado y siguiente trabajo
 

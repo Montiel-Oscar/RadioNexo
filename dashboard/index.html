@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RadioNexo · resultados de prueba</title>
+  <style>
+    :root { color-scheme: light; --ink:#172332; --muted:#5d6a78; --line:#d9e1e8; --paper:#f5f7f9; --white:#fff; --rules:#8a9cab; --crf:#167c83; --hybrid:#c47838; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.5 system-ui,-apple-system,Segoe UI,sans-serif; }
+    .wrap { max-width:1120px; margin:auto; padding:32px 22px 64px; }
+    header { display:flex; justify-content:space-between; align-items:flex-start; gap:20px; border-bottom:1px solid var(--line); padding-bottom:22px; }
+    h1 { font-size:clamp(29px,4vw,43px); line-height:1.12; letter-spacing:-.04em; margin:6px 0 8px; }
+    h2 { font-size:21px; line-height:1.2; margin:0 0 6px; letter-spacing:-.02em; }
+    p { margin:0; }
+    .eyebrow { text-transform:uppercase; letter-spacing:.16em; color:var(--crf); font-size:12px; font-weight:700; }
+    .lead { color:var(--muted); max-width:720px; }
+    .tag { flex:none; border:1px solid var(--line); border-radius:100px; padding:7px 12px; color:var(--muted); font-size:13px; background:var(--white); }
+    .metrics { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:22px 0; }
+    .metric, section { background:var(--white); border:1px solid var(--line); border-radius:14px; }
+    .metric { padding:17px 19px; }
+    .metric strong { display:block; font-size:28px; letter-spacing:-.04em; font-variant-numeric:tabular-nums; }
+    .metric span { color:var(--muted); font-size:13px; }
+    .grid { display:grid; grid-template-columns:1.12fr .88fr; gap:15px; }
+    section { padding:24px; margin-bottom:15px; min-width:0; }
+    .wide { grid-column:1/-1; }
+    .sub { color:var(--muted); font-size:14px; margin-bottom:20px; }
+    .controls { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin:18px 0; }
+    label { color:var(--muted); font-size:14px; }
+    select { font:inherit; padding:6px 30px 6px 9px; border:1px solid var(--line); border-radius:7px; background:var(--white); color:var(--ink); }
+    .plot-row { display:grid; grid-template-columns:90px 1fr 58px; gap:12px; align-items:center; margin:14px 0; font-variant-numeric:tabular-nums; }
+    .plot-row .name { font-size:14px; }
+    .track { height:18px; background:#eef2f4; border-radius:4px; overflow:hidden; }
+    .bar { display:block; height:100%; border-radius:4px; transition:width .25s; }
+    .bar.rules { background:var(--rules); }.bar.crf { background:var(--crf); }.bar.hybrid { background:var(--hybrid); }
+    .value { text-align:right; font-weight:650; }
+    .axis { display:flex; justify-content:space-between; margin-left:102px; margin-right:70px; color:var(--muted); font-size:12px; border-top:1px solid var(--line); padding-top:4px; }
+    .legend { display:flex; flex-wrap:wrap; gap:16px; margin-top:18px; font-size:13px; color:var(--muted); }
+    .legend i { display:inline-block; width:11px; height:11px; border-radius:2px; margin-right:6px; vertical-align:-1px; }
+    .cluster { margin:17px 0 23px; }
+    .cluster-title { font-size:14px; font-weight:700; margin-bottom:9px; }
+    .cluster-title small { color:var(--muted); font-weight:400; }
+    .cluster .plot-row { margin:6px 0; }
+    .cluster .track { height:13px; }
+    .cluster .name { font-size:12px; }
+    #lengths .plot-row { grid-template-columns:132px 1fr 58px; }
+    #lengths + .axis { margin-left:144px; }
+    .clusters { display:grid; grid-template-columns:1fr 1fr; gap:0 24px; }
+    .note { border-left:3px solid var(--hybrid); padding-left:12px; color:var(--muted); font-size:14px; margin-top:18px; }
+    .wins { display:flex; height:27px; border-radius:5px; overflow:hidden; margin:12px 0 4px; }
+    .wins span { display:block; height:100%; }
+    .win-row { margin:20px 0; }
+    .win-row strong { font-size:14px; }
+    footer { color:var(--muted); font-size:13px; padding-top:8px; }
+    footer a { color:var(--crf); }
+    @media (max-width:760px) { .metrics { grid-template-columns:repeat(2,1fr); } .grid,.clusters { grid-template-columns:1fr; } header { display:block; } .tag { display:inline-block; margin-top:15px; } }
+    @media (max-width:430px) { .wrap { padding:22px 14px 50px; } section { padding:17px; } .plot-row { grid-template-columns:70px 1fr 48px; gap:6px; } .axis { margin-left:76px; margin-right:54px; } #lengths .plot-row { grid-template-columns:112px 1fr 48px; } #lengths + .axis { margin-left:118px; } }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header>
+      <div><div class="eyebrow">RadioNexo · estudio reproducible</div><h1>¿Dónde está el hallazgo?</h1><p class="lead">Resultados de extracción espacial en informes radiológicos. Los indicadores espaciales verdaderos se proporcionaron a todos los métodos.</p></div>
+      <span class="tag">Prueba final · sin uso clínico</span>
+    </header>
+    <div class="metrics" id="summary"></div>
+    <div class="grid">
+      <section>
+        <h2>Comparación principal</h2><p class="sub">Coincidencia exacta de fragmentos; escala de 0 a 1.</p>
+        <div class="controls"><label for="metric">Métrica</label><select id="metric"><option value="f1">F1 micro</option><option value="precision">Precisión</option><option value="recall">Exhaustividad</option></select></div>
+        <div id="methods" role="img" aria-label="Comparación de los tres métodos"></div><div class="axis"><span>0</span><span>0.25</span><span>0.50</span><span>0.75</span><span>1</span></div>
+        <p class="note">El CRF supera a reglas por +0.215 F1. El híbrido baja −0.012 frente al CRF: recuperó una mención exacta adicional, pero añadió 18 falsos positivos.</p>
+      </section>
+      <section>
+        <h2>Qué significan los errores</h2><p class="sub">Conteos agregados de la prueba, sin texto de informes.</p>
+        <div id="errors"></div><div class="legend"><span><i style="background:var(--rules)"></i>Reglas</span><span><i style="background:var(--crf)"></i>CRF</span><span><i style="background:var(--hybrid)"></i>Híbrido</span></div>
+        <p class="note">Las longitudes de las barras usan como escala las 591 menciones de referencia. Un límite de frase incorrecto crea un falso positivo y un falso negativo en la métrica exacta.</p>
+      </section>
+      <section class="wide">
+        <h2>¿Qué expresiones resultaron más difíciles?</h2><p class="sub">F1 por indicador espacial con al menos seis casos. Los grupos pequeños son descriptivos, no comparaciones concluyentes.</p>
+        <div class="clusters" id="indicators"></div>
+      </section>
+      <section>
+        <h2>Longitud de la mención</h2><p class="sub">Exhaustividad exacta del CRF según los tokens de la referencia.</p>
+        <div id="lengths"></div><div class="axis"><span>0</span><span>0.25</span><span>0.50</span><span>0.75</span><span>1</span></div>
+        <p class="note">Las 21 menciones discontinuas de prueba no pueden representarse como una sola mención con BIO; la exhaustividad exacta es 0.</p>
+      </section>
+      <section>
+        <h2>Comparación por informe</h2><p class="sub">158 informes con al menos una mención principal anotada.</p>
+        <div id="wins"></div>
+        <p class="note">Un empate por informe no implica que ambos métodos hayan producido idénticas predicciones.</p>
+      </section>
+    </div>
+    <footer>Desglose exploratorio posterior a la prueba. No se reentrenó ni se seleccionaron modelos con él. <a href="../README.md">Método y reproducción</a> · <a href="../results/final_test.md">Resultados completos</a>.</footer>
+  </main>
+  <script id="data" type="application/json">{"scope":"Prueba congelada; indicadores verdaderos proporcionados; fragmentos exactos","documents":300,"documents_with_indicators":160,"indicators":281,"gold_mentions":591,"methods":{"Reglas":{"overall_micro":{"tp":378,"fp":163,"fn":213,"precision":0.6987060998151571,"recall":0.6395939086294417,"f1":0.667844522968198},"by_role":{"Trajector":{"tp":184,"fp":85,"fn":122,"precision":0.6840148698884758,"recall":0.6013071895424836,"f1":0.64},"Landmark":{"tp":194,"fp":78,"fn":91,"precision":0.7132352941176471,"recall":0.6807017543859649,"f1":0.6965888689407541}},"gold_frames":281,"predicted_frames":281},"CRF":{"overall_micro":{"tp":521,"fp":68,"fn":70,"precision":0.8845500848896435,"recall":0.8815566835871405,"f1":0.8830508474576272},"by_role":{"Trajector":{"tp":270,"fp":32,"fn":36,"precision":0.8940397350993378,"recall":0.8823529411764706,"f1":0.8881578947368421},"Landmark":{"tp":251,"fp":36,"fn":34,"precision":0.8745644599303136,"recall":0.8807017543859649,"f1":0.8776223776223776}},"gold_frames":281,"predicted_frames":281},"Híbrido":{"overall_micro":{"tp":522,"fp":86,"fn":69,"precision":0.8585526315789473,"recall":0.883248730964467,"f1":0.8707256046705587},"by_role":{"Trajector":{"tp":270,"fp":46,"fn":36,"precision":0.8544303797468354,"recall":0.8823529411764706,"f1":0.8681672025723473},"Landmark":{"tp":252,"fp":40,"fn":33,"precision":0.863013698630137,"recall":0.8842105263157894,"f1":0.8734835355285961}},"gold_frames":281,"predicted_frames":281}},"indicators_with_at_least_6_frames":[{"indicator":"of","frames":130,"methods":{"Reglas":{"tp":176,"fp":69,"fn":86,"precision":0.7183673469387755,"recall":0.6717557251908397,"f1":0.6942800788954635},"CRF":{"tp":240,"fp":23,"fn":22,"precision":0.9125475285171103,"recall":0.916030534351145,"f1":0.9142857142857143},"Híbrido":{"tp":240,"fp":26,"fn":22,"precision":0.9022556390977443,"recall":0.916030534351145,"f1":0.9090909090909091}}},{"indicator":"in","frames":71,"methods":{"Reglas":{"tp":99,"fp":42,"fn":49,"precision":0.7021276595744681,"recall":0.668918918918919,"f1":0.6851211072664359},"CRF":{"tp":128,"fp":19,"fn":20,"precision":0.8707482993197279,"recall":0.8648648648648649,"f1":0.8677966101694915},"Híbrido":{"tp":129,"fp":25,"fn":19,"precision":0.8376623376623377,"recall":0.8716216216216216,"f1":0.8543046357615894}}},{"indicator":"without","frames":25,"methods":{"Reglas":{"tp":41,"fp":9,"fn":25,"precision":0.82,"recall":0.6212121212121212,"f1":0.7068965517241379},"CRF":{"tp":62,"fp":6,"fn":4,"precision":0.9117647058823529,"recall":0.9393939393939394,"f1":0.9253731343283582},"Híbrido":{"tp":62,"fp":6,"fn":4,"precision":0.9117647058823529,"recall":0.9393939393939394,"f1":0.9253731343283582}}},{"indicator":"with","frames":11,"methods":{"Reglas":{"tp":11,"fp":10,"fn":11,"precision":0.5238095238095238,"recall":0.5,"f1":0.5116279069767442},"CRF":{"tp":13,"fp":9,"fn":9,"precision":0.5909090909090909,"recall":0.5909090909090909,"f1":0.5909090909090909},"Híbrido":{"tp":13,"fp":13,"fn":9,"precision":0.5,"recall":0.5909090909090909,"f1":0.5416666666666666}}},{"indicator":"within","frames":10,"methods":{"Reglas":{"tp":14,"fp":6,"fn":7,"precision":0.7,"recall":0.6666666666666666,"f1":0.6829268292682927},"CRF":{"tp":19,"fp":1,"fn":2,"precision":0.95,"recall":0.9047619047619048,"f1":0.926829268292683},"Híbrido":{"tp":19,"fp":1,"fn":2,"precision":0.95,"recall":0.9047619047619048,"f1":0.926829268292683}}},{"indicator":"over","frames":7,"methods":{"Reglas":{"tp":10,"fp":4,"fn":5,"precision":0.7142857142857143,"recall":0.6666666666666666,"f1":0.6896551724137931},"CRF":{"tp":14,"fp":0,"fn":1,"precision":1.0,"recall":0.9333333333333333,"f1":0.9655172413793104},"Híbrido":{"tp":14,"fp":1,"fn":1,"precision":0.9333333333333333,"recall":0.9333333333333333,"f1":0.9333333333333333}}},{"indicator":"under","frames":6,"methods":{"Reglas":{"tp":10,"fp":1,"fn":2,"precision":0.9090909090909091,"recall":0.8333333333333334,"f1":0.8695652173913043},"CRF":{"tp":12,"fp":0,"fn":0,"precision":1.0,"recall":1.0,"f1":1.0},"Híbrido":{"tp":12,"fp":0,"fn":0,"precision":1.0,"recall":1.0,"f1":1.0}}},{"indicator":"at","frames":6,"methods":{"Reglas":{"tp":4,"fp":7,"fn":9,"precision":0.36363636363636365,"recall":0.3076923076923077,"f1":0.3333333333333333},"CRF":{"tp":10,"fp":3,"fn":3,"precision":0.7692307692307693,"recall":0.7692307692307693,"f1":0.7692307692307693},"Híbrido":{"tp":10,"fp":4,"fn":3,"precision":0.7142857142857143,"recall":0.7692307692307693,"f1":0.7407407407407407}}}],"gold_length_recall":[{"bucket":"1 token","gold":183,"recall":{"Reglas":0.7759562841530054,"CRF":0.9234972677595629,"Híbrido":0.9234972677595629}},{"bucket":"2 tokens","gold":220,"recall":{"Reglas":0.6954545454545454,"CRF":0.9272727272727272,"Híbrido":0.9272727272727272}},{"bucket":"3 tokens","gold":125,"recall":{"Reglas":0.608,"CRF":0.904,"Híbrido":0.912}},{"bucket":"4+ tokens","gold":42,"recall":{"Reglas":0.16666666666666666,"CRF":0.8333333333333334,"Híbrido":0.8333333333333334}},{"bucket":"Discontinua","gold":21,"recall":{"Reglas":0.0,"CRF":0.0,"Híbrido":0.0}}],"document_f1_comparison":{"CRF_vs_Reglas":{"Empate":61,"CRF":91,"Reglas":6},"CRF_vs_Híbrido":{"Empate":144,"CRF":13,"Híbrido":1}},"notes":["Los grupos por longitud clasifican menciones gold; recall exacta no es F1.","Las comparaciones por documento excluyen documentos sin menciones principales gold.","Los desgloses son descriptivos posteriores a la prueba y no se usaron para ajustar modelos."]}</script>
+  <script>
+    const data = JSON.parse(document.getElementById('data').textContent);
+    const colors = {'Reglas':'rules','CRF':'crf','Híbrido':'hybrid'};
+    const fmt = x => Number(x).toFixed(3);
+    const row = (name, value, color, suffix='') => `<div class="plot-row"><span class="name">${name}</span><span class="track"><span class="bar ${color}" style="width:${Math.max(0, Math.min(100, value * 100))}%"></span></span><span class="value">${suffix || fmt(value)}</span></div>`;
+    const overall = data.methods;
+    document.getElementById('summary').innerHTML = [
+      ['Informes', data.documents], ['Con indicadores', data.documents_with_indicators],
+      ['Indicadores', data.indicators], ['Menciones gold', data.gold_mentions]
+    ].map(([label,value])=>`<div class="metric"><strong>${value}</strong><span>${label}</span></div>`).join('');
+    function drawMetric() {
+      const key = document.getElementById('metric').value;
+      document.getElementById('methods').innerHTML = Object.keys(colors).map(name => row(name, overall[name].overall_micro[key], colors[name])).join('');
+    }
+    document.getElementById('metric').addEventListener('change', drawMetric);
+    drawMetric();
+    document.getElementById('errors').innerHTML = ['Reglas','CRF','Híbrido'].map(name => {
+      const s = overall[name].overall_micro;
+      return `<div class="cluster"><div class="cluster-title">${name}</div><div class="plot-row"><span class="name">Aciertos</span><span class="track"><span class="bar ${colors[name]}" style="width:${s.tp / data.gold_mentions * 100}%"></span></span><span class="value">${s.tp}</span></div><div class="plot-row"><span class="name">Falsos +</span><span class="track"><span class="bar ${colors[name]}" style="width:${s.fp / data.gold_mentions * 100}%"></span></span><span class="value">${s.fp}</span></div><div class="plot-row"><span class="name">Omisiones</span><span class="track"><span class="bar ${colors[name]}" style="width:${s.fn / data.gold_mentions * 100}%"></span></span><span class="value">${s.fn}</span></div></div>`;
+    }).join('');
+    document.getElementById('indicators').innerHTML = data.indicators_with_at_least_6_frames.map(group =>
+      `<div class="cluster"><div class="cluster-title">${group.indicator} <small>· ${group.frames} indicadores</small></div>${['Reglas','CRF','Híbrido'].map(name => row(name, group.methods[name].f1, colors[name])).join('')}</div>`
+    ).join('');
+    document.getElementById('lengths').innerHTML = data.gold_length_recall.map(group =>
+      row(group.bucket + ` (n=${group.gold})`, group.recall.CRF, 'crf')
+    ).join('');
+    document.getElementById('wins').innerHTML = ['Reglas','Híbrido'].map(other => {
+      const w = data.document_f1_comparison[`CRF_vs_${other}`];
+      const total = Object.values(w).reduce((a,b)=>a+b,0);
+      return `<div class="win-row"><strong>CRF frente a ${other}</strong><div class="wins" role="img" aria-label="CRF gana ${w.CRF || 0}, empate ${w.Empate || 0}, ${other} gana ${w[other] || 0}"><span style="width:${(w.CRF||0)/total*100}%;background:var(--crf)"></span><span style="width:${(w.Empate||0)/total*100}%;background:#c7d1d9"></span><span style="width:${(w[other]||0)/total*100}%;background:var(--${colors[other]})"></span></div><div class="legend"><span>CRF ${w.CRF||0}</span><span>Empate ${w.Empate||0}</span><span>${other} ${w[other]||0}</span></div></div>`;
+    }).join('');
+  </script>
+</body>
+</html>

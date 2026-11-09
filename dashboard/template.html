@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RadioNexo · resultados de prueba</title>
+  <style>
+    :root { color-scheme: light; --ink:#172332; --muted:#5d6a78; --line:#d9e1e8; --paper:#f5f7f9; --white:#fff; --rules:#8a9cab; --crf:#167c83; --hybrid:#c47838; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.5 system-ui,-apple-system,Segoe UI,sans-serif; }
+    .wrap { max-width:1120px; margin:auto; padding:32px 22px 64px; }
+    header { display:flex; justify-content:space-between; align-items:flex-start; gap:20px; border-bottom:1px solid var(--line); padding-bottom:22px; }
+    h1 { font-size:clamp(29px,4vw,43px); line-height:1.12; letter-spacing:-.04em; margin:6px 0 8px; }
+    h2 { font-size:21px; line-height:1.2; margin:0 0 6px; letter-spacing:-.02em; }
+    p { margin:0; }
+    .eyebrow { text-transform:uppercase; letter-spacing:.16em; color:var(--crf); font-size:12px; font-weight:700; }
+    .lead { color:var(--muted); max-width:720px; }
+    .tag { flex:none; border:1px solid var(--line); border-radius:100px; padding:7px 12px; color:var(--muted); font-size:13px; background:var(--white); }
+    .metrics { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:22px 0; }
+    .metric, section { background:var(--white); border:1px solid var(--line); border-radius:14px; }
+    .metric { padding:17px 19px; }
+    .metric strong { display:block; font-size:28px; letter-spacing:-.04em; font-variant-numeric:tabular-nums; }
+    .metric span { color:var(--muted); font-size:13px; }
+    .grid { display:grid; grid-template-columns:1.12fr .88fr; gap:15px; }
+    section { padding:24px; margin-bottom:15px; min-width:0; }
+    .wide { grid-column:1/-1; }
+    .sub { color:var(--muted); font-size:14px; margin-bottom:20px; }
+    .controls { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin:18px 0; }
+    label { color:var(--muted); font-size:14px; }
+    select { font:inherit; padding:6px 30px 6px 9px; border:1px solid var(--line); border-radius:7px; background:var(--white); color:var(--ink); }
+    .plot-row { display:grid; grid-template-columns:90px 1fr 58px; gap:12px; align-items:center; margin:14px 0; font-variant-numeric:tabular-nums; }
+    .plot-row .name { font-size:14px; }
+    .track { height:18px; background:#eef2f4; border-radius:4px; overflow:hidden; }
+    .bar { display:block; height:100%; border-radius:4px; transition:width .25s; }
+    .bar.rules { background:var(--rules); }.bar.crf { background:var(--crf); }.bar.hybrid { background:var(--hybrid); }
+    .value { text-align:right; font-weight:650; }
+    .axis { display:flex; justify-content:space-between; margin-left:102px; margin-right:70px; color:var(--muted); font-size:12px; border-top:1px solid var(--line); padding-top:4px; }
+    .legend { display:flex; flex-wrap:wrap; gap:16px; margin-top:18px; font-size:13px; color:var(--muted); }
+    .legend i { display:inline-block; width:11px; height:11px; border-radius:2px; margin-right:6px; vertical-align:-1px; }
+    .cluster { margin:17px 0 23px; }
+    .cluster-title { font-size:14px; font-weight:700; margin-bottom:9px; }
+    .cluster-title small { color:var(--muted); font-weight:400; }
+    .cluster .plot-row { margin:6px 0; }
+    .cluster .track { height:13px; }
+    .cluster .name { font-size:12px; }
+    #lengths .plot-row { grid-template-columns:132px 1fr 58px; }
+    #lengths + .axis { margin-left:144px; }
+    .clusters { display:grid; grid-template-columns:1fr 1fr; gap:0 24px; }
+    .note { border-left:3px solid var(--hybrid); padding-left:12px; color:var(--muted); font-size:14px; margin-top:18px; }
+    .wins { display:flex; height:27px; border-radius:5px; overflow:hidden; margin:12px 0 4px; }
+    .wins span { display:block; height:100%; }
+    .win-row { margin:20px 0; }
+    .win-row strong { font-size:14px; }
+    footer { color:var(--muted); font-size:13px; padding-top:8px; }
+    footer a { color:var(--crf); }
+    @media (max-width:760px) { .metrics { grid-template-columns:repeat(2,1fr); } .grid,.clusters { grid-template-columns:1fr; } header { display:block; } .tag { display:inline-block; margin-top:15px; } }
+    @media (max-width:430px) { .wrap { padding:22px 14px 50px; } section { padding:17px; } .plot-row { grid-template-columns:70px 1fr 48px; gap:6px; } .axis { margin-left:76px; margin-right:54px; } #lengths .plot-row { grid-template-columns:112px 1fr 48px; } #lengths + .axis { margin-left:118px; } }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header>
+      <div><div class="eyebrow">RadioNexo · estudio reproducible</div><h1>¿Dónde está el hallazgo?</h1><p class="lead">Resultados de extracción espacial en informes radiológicos. Los indicadores espaciales verdaderos se proporcionaron a todos los métodos.</p></div>
+      <span class="tag">Prueba final · sin uso clínico</span>
+    </header>
+    <div class="metrics" id="summary"></div>
+    <div class="grid">
+      <section>
+        <h2>Comparación principal</h2><p class="sub">Coincidencia exacta de fragmentos; escala de 0 a 1.</p>
+        <div class="controls"><label for="metric">Métrica</label><select id="metric"><option value="f1">F1 micro</option><option value="precision">Precisión</option><option value="recall">Exhaustividad</option></select></div>
+        <div id="methods" role="img" aria-label="Comparación de los tres métodos"></div><div class="axis"><span>0</span><span>0.25</span><span>0.50</span><span>0.75</span><span>1</span></div>
+        <p class="note">El CRF supera a reglas por +0.215 F1. El híbrido baja −0.012 frente al CRF: recuperó una mención exacta adicional, pero añadió 18 falsos positivos.</p>
+      </section>
+      <section>
+        <h2>Qué significan los errores</h2><p class="sub">Conteos agregados de la prueba, sin texto de informes.</p>
+        <div id="errors"></div><div class="legend"><span><i style="background:var(--rules)"></i>Reglas</span><span><i style="background:var(--crf)"></i>CRF</span><span><i style="background:var(--hybrid)"></i>Híbrido</span></div>
+        <p class="note">Las longitudes de las barras usan como escala las 591 menciones de referencia. Un límite de frase incorrecto crea un falso positivo y un falso negativo en la métrica exacta.</p>
+      </section>
+      <section class="wide">
+        <h2>¿Qué expresiones resultaron más difíciles?</h2><p class="sub">F1 por indicador espacial con al menos seis casos. Los grupos pequeños son descriptivos, no comparaciones concluyentes.</p>
+        <div class="clusters" id="indicators"></div>
+      </section>
+      <section>
+        <h2>Longitud de la mención</h2><p class="sub">Exhaustividad exacta del CRF según los tokens de la referencia.</p>
+        <div id="lengths"></div><div class="axis"><span>0</span><span>0.25</span><span>0.50</span><span>0.75</span><span>1</span></div>
+        <p class="note">Las 21 menciones discontinuas de prueba no pueden representarse como una sola mención con BIO; la exhaustividad exacta es 0.</p>
+      </section>
+      <section>
+        <h2>Comparación por informe</h2><p class="sub">158 informes con al menos una mención principal anotada.</p>
+        <div id="wins"></div>
+        <p class="note">Un empate por informe no implica que ambos métodos hayan producido idénticas predicciones.</p>
+      </section>
+    </div>
+    <footer>Desglose exploratorio posterior a la prueba. No se reentrenó ni se seleccionaron modelos con él. <a href="../README.md">Método y reproducción</a> · <a href="../results/final_test.md">Resultados completos</a>.</footer>
+  </main>
+  <script id="data" type="application/json">__RADIONEXO_DATA__</script>
+  <script>
+    const data = JSON.parse(document.getElementById('data').textContent);
+    const colors = {'Reglas':'rules','CRF':'crf','Híbrido':'hybrid'};
+    const fmt = x => Number(x).toFixed(3);
+    const row = (name, value, color, suffix='') => `<div class="plot-row"><span class="name">${name}</span><span class="track"><span class="bar ${color}" style="width:${Math.max(0, Math.min(100, value * 100))}%"></span></span><span class="value">${suffix || fmt(value)}</span></div>`;
+    const overall = data.methods;
+    document.getElementById('summary').innerHTML = [
+      ['Informes', data.documents], ['Con indicadores', data.documents_with_indicators],
+      ['Indicadores', data.indicators], ['Menciones gold', data.gold_mentions]
+    ].map(([label,value])=>`<div class="metric"><strong>${value}</strong><span>${label}</span></div>`).join('');
+    function drawMetric() {
+      const key = document.getElementById('metric').value;
+      document.getElementById('methods').innerHTML = Object.keys(colors).map(name => row(name, overall[name].overall_micro[key], colors[name])).join('');
+    }
+    document.getElementById('metric').addEventListener('change', drawMetric);
+    drawMetric();
+    document.getElementById('errors').innerHTML = ['Reglas','CRF','Híbrido'].map(name => {
+      const s = overall[name].overall_micro;
+      return `<div class="cluster"><div class="cluster-title">${name}</div><div class="plot-row"><span class="name">Aciertos</span><span class="track"><span class="bar ${colors[name]}" style="width:${s.tp / data.gold_mentions * 100}%"></span></span><span class="value">${s.tp}</span></div><div class="plot-row"><span class="name">Falsos +</span><span class="track"><span class="bar ${colors[name]}" style="width:${s.fp / data.gold_mentions * 100}%"></span></span><span class="value">${s.fp}</span></div><div class="plot-row"><span class="name">Omisiones</span><span class="track"><span class="bar ${colors[name]}" style="width:${s.fn / data.gold_mentions * 100}%"></span></span><span class="value">${s.fn}</span></div></div>`;
+    }).join('');
+    document.getElementById('indicators').innerHTML = data.indicators_with_at_least_6_frames.map(group =>
+      `<div class="cluster"><div class="cluster-title">${group.indicator} <small>· ${group.frames} indicadores</small></div>${['Reglas','CRF','Híbrido'].map(name => row(name, group.methods[name].f1, colors[name])).join('')}</div>`
+    ).join('');
+    document.getElementById('lengths').innerHTML = data.gold_length_recall.map(group =>
+      row(group.bucket + ` (n=${group.gold})`, group.recall.CRF, 'crf')
+    ).join('');
+    document.getElementById('wins').innerHTML = ['Reglas','Híbrido'].map(other => {
+      const w = data.document_f1_comparison[`CRF_vs_${other}`];
+      const total = Object.values(w).reduce((a,b)=>a+b,0);
+      return `<div class="win-row"><strong>CRF frente a ${other}</strong><div class="wins" role="img" aria-label="CRF gana ${w.CRF || 0}, empate ${w.Empate || 0}, ${other} gana ${w[other] || 0}"><span style="width:${(w.CRF||0)/total*100}%;background:var(--crf)"></span><span style="width:${(w.Empate||0)/total*100}%;background:#c7d1d9"></span><span style="width:${(w[other]||0)/total*100}%;background:var(--${colors[other]})"></span></div><div class="legend"><span>CRF ${w.CRF||0}</span><span>Empate ${w.Empate||0}</span><span>${other} ${w[other]||0}</span></div></div>`;
+    }).join('');
+  </script>
+</body>
+</html>
