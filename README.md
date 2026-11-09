@@ -8,7 +8,7 @@ Dado un **indicador espacial ya marcado** en el texto de un informe de radiograf
 
 El trabajo compara tres métodos bajo el mismo protocolo: **reglas léxicas y de proximidad**, dos modelos secuenciales **CRF** (uno por rol) y un **híbrido fijo** que recurre a reglas sólo si el CRF no produjo ese rol. No usamos un LLM ni un encoder biomédico en el experimento reportado.
 
-Puedes explorar las cifras en el [panel visual local](dashboard/index.html) y consultar el [método de los desgloses](docs/visualizaciones.md). El panel contiene sólo estadísticas agregadas, no informes clínicos.
+Puedes explorar las cifras en el [panel visual](https://montiel-oscar.github.io/RadioNexo/) y probar la [demostración interactiva](https://montiel-oscar.github.io/RadioNexo/demo.html). Ambas páginas usan sólo estadísticas agregadas o frases inventadas; el [método de los desgloses](docs/visualizaciones.md) está documentado aquí. Si GitHub Pages aún no se ha desplegado, los archivos locales están en `dashboard/`.
 
 ## Resultado principal
 
@@ -89,7 +89,7 @@ src/           Lector, preparación, reglas, CRF, híbrido, evaluación y demo
 tests/         Pruebas automatizadas
 ```
 
-`data/raw/`, `data/processed/`, `models/`, `results/tmp/` y `.venv/` se mantienen locales mediante `.gitignore`. **No subas informes clínicos ni predicciones individuales al repositorio.** La fuente LaTeX de clase se mantiene fuera del repositorio; su [PDF compilado](Reportefinal/main.pdf) sí está aquí y contiene datos personales en la portada. Revísalo antes de cambiar la visibilidad privada del repositorio.
+`data/raw/`, `data/processed/`, `models/`, `results/tmp/` y `.venv/` se mantienen locales mediante `.gitignore`. **No subas informes clínicos ni predicciones individuales al repositorio.** La fuente LaTeX de clase se mantiene fuera del repositorio; su [PDF compilado](Reportefinal/main.pdf) sí está aquí y contiene datos personales en la portada. El repositorio es público: revisa si deseas mantener visible ese PDF. El flujo de Pages publica **únicamente** las dos páginas de `dashboard/`, no el PDF ni otros archivos del repositorio.
 
 ## Estado y siguiente trabajo
 

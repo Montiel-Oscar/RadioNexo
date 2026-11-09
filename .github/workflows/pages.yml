@@ -1,0 +1,43 @@
+name: Publicar panel y demostración
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - dashboard/index.html
+      - dashboard/demo.html
+      - .github/workflows/pages.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Obtener repositorio
+        uses: actions/checkout@v4
+      - name: Configurar GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Preparar sólo las dos páginas públicas
+        run: |
+          mkdir site
+          cp dashboard/index.html site/index.html
+          cp dashboard/demo.html site/demo.html
+      - name: Subir sitio estático
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - name: Publicar
+        id: deployment
+        uses: actions/deploy-pages@v4

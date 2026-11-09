@@ -1,6 +1,6 @@
 # Visualizaciones y desgloses de la prueba final
 
-Estas figuras y el [panel local](../dashboard/index.html) describen la **misma prueba final congelada**. Se calcularon después de ver los resultados, sin reentrenar ni cambiar reglas. Son análisis descriptivos, no nuevas hipótesis confirmadas. Ningún archivo publicado contiene texto de informes, identificadores de pacientes ni predicciones individuales.
+Estas figuras y el [panel público](https://montiel-oscar.github.io/RadioNexo/) describen la **misma prueba final congelada**. Se calcularon después de ver los resultados, sin reentrenar ni cambiar reglas. Son análisis descriptivos, no nuevas hipótesis confirmadas. Las dos páginas servidas por GitHub Pages contienen sólo estadísticas agregadas o frases inventadas: no incluyen informes, identificadores de pacientes ni predicciones individuales.
 
 ## Regenerar
 
@@ -11,7 +11,7 @@ python src/visual_stats.py
 python src/build_dashboard.py
 ```
 
-Abre `dashboard/index.html` en un navegador. Es un archivo autónomo: no carga datos clínicos ni usa un servicio externo. El archivo generado [visualization_stats.json](../results/visualization_stats.json) contiene sólo conteos y métricas agregados; el script valida que el CRF reproduce 521 aciertos, 68 falsos positivos y 70 omisiones antes de escribirlo.
+Abre `dashboard/index.html` en un navegador o la [versión GitHub Pages](https://montiel-oscar.github.io/RadioNexo/). La segunda vista, [demo.html](https://montiel-oscar.github.io/RadioNexo/demo.html), permite alternar tres frases inventadas y las salidas guardadas de cada método; no ejecuta inferencia en el navegador. El panel es autónomo: no carga datos clínicos ni usa un servicio externo. El archivo generado [visualization_stats.json](../results/visualization_stats.json) contiene sólo conteos y métricas agregados; el script valida que el CRF reproduce 521 aciertos, 68 falsos positivos y 70 omisiones antes de escribirlo.
 
 ## Qué muestran los nuevos desgloses
 

@@ -10,6 +10,10 @@
     body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.5 system-ui,-apple-system,Segoe UI,sans-serif; }
     .wrap { max-width:1120px; margin:auto; padding:32px 22px 64px; }
     header { display:flex; justify-content:space-between; align-items:flex-start; gap:20px; border-bottom:1px solid var(--line); padding-bottom:22px; }
+    nav { display:flex; flex-wrap:wrap; gap:9px; margin:18px 0 0; }
+    nav a { color:var(--crf); text-decoration:none; padding:7px 12px; border:1px solid var(--line); border-radius:100px; background:var(--white); font-size:14px; }
+    nav a[aria-current="page"] { background:var(--crf); color:var(--white); border-color:var(--crf); }
+    nav a:hover { text-decoration:underline; }
     h1 { font-size:clamp(29px,4vw,43px); line-height:1.12; letter-spacing:-.04em; margin:6px 0 8px; }
     h2 { font-size:21px; line-height:1.2; margin:0 0 6px; letter-spacing:-.02em; }
     p { margin:0; }
@@ -60,7 +64,7 @@
 <body>
   <main class="wrap">
     <header>
-      <div><div class="eyebrow">RadioNexo · estudio reproducible</div><h1>¿Dónde está el hallazgo?</h1><p class="lead">Resultados de extracción espacial en informes radiológicos. Los indicadores espaciales verdaderos se proporcionaron a todos los métodos.</p></div>
+      <div><div class="eyebrow">RadioNexo · estudio reproducible</div><h1>¿Dónde está el hallazgo?</h1><p class="lead">Resultados de extracción espacial en informes radiológicos. Los indicadores espaciales verdaderos se proporcionaron a todos los métodos.</p><nav aria-label="Secciones del proyecto"><a href="index.html" aria-current="page">Resultados</a><a href="demo.html">Demostración</a><a href="https://github.com/Montiel-Oscar/RadioNexo">Código en GitHub</a></nav></div>
       <span class="tag">Prueba final · sin uso clínico</span>
     </header>
     <div class="metrics" id="summary"></div>
@@ -91,7 +95,7 @@
         <p class="note">Un empate por informe no implica que ambos métodos hayan producido idénticas predicciones.</p>
       </section>
     </div>
-    <footer>Desglose exploratorio posterior a la prueba. No se reentrenó ni se seleccionaron modelos con él. <a href="../README.md">Método y reproducción</a> · <a href="../results/final_test.md">Resultados completos</a>.</footer>
+    <footer>Desglose exploratorio posterior a la prueba. No se reentrenó ni se seleccionaron modelos con él. <a href="https://github.com/Montiel-Oscar/RadioNexo#reproducir-desde-una-copia-limpia">Método y reproducción</a> · <a href="https://github.com/Montiel-Oscar/RadioNexo/blob/main/results/final_test.md">Resultados completos</a>.</footer>
   </main>
   <script id="data" type="application/json">__RADIONEXO_DATA__</script>
   <script>
